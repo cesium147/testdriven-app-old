@@ -40,6 +40,7 @@ def get_all_users():
     }
     return jsonify(response_object), 200
 
+
 @users_blueprint.route('/users', methods=['POST'])
 def add_user():
     post_data = request.get_json()

@@ -19,7 +19,6 @@ def add_user(username, email):
 class TestUserService(BaseTestCase):
     """Tests for the Users Service."""
 
-
     def test_users(self):
         """Ensure the /ping route behaves correctly."""
         response = self.client.get('/users/ping')
@@ -27,7 +26,6 @@ class TestUserService(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('pong!', data['message'])
         self.assertIn('success', data['status'])
-
 
     def test_add_user(self):
         """Ensure a new user can be added to the database."""
@@ -98,7 +96,6 @@ class TestUserService(BaseTestCase):
                 'Sorry. That email already exists.', data['message'])
             self.assertIn('fail', data['status'])
 
-
     def test_single_user(self):
         """Ensure get single user behaves correctly."""
         user = add_user('michael', 'michael@mherman.org')
@@ -109,7 +106,6 @@ class TestUserService(BaseTestCase):
             self.assertIn('michael', data['data']['username'])
             self.assertIn('michael@mherman.org', data['data']['email'])
             self.assertIn('success', data['status'])
-
 
     def test_single_user_no_id(self):
         """Ensure error is thrown if an id is not provided."""
@@ -129,7 +125,6 @@ class TestUserService(BaseTestCase):
             self.assertIn('User does not exist', data['message'])
             self.assertIn('fail', data['status'])
 
-
     def test_all_users(self):
         """Ensure get all users behaves correctly."""
         add_user('michael', 'michael@mherman.org')
@@ -147,7 +142,6 @@ class TestUserService(BaseTestCase):
                 'fletcher@notreal.com', data['data']['users'][1]['email'])
             self.assertIn('success', data['status'])
 
-
     def test_main_no_users(self):
         """Ensure the main route behaves correctly when no users have been
         added to the database."""
@@ -155,7 +149,6 @@ class TestUserService(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'<h1>All Users</h1>', response.data)
         self.assertIn(b'<p>No users!</p>', response.data)
-
 
     def test_main_with_users(self):
         """Ensure the main route behaves correctly when users have been
@@ -169,7 +162,6 @@ class TestUserService(BaseTestCase):
             self.assertNotIn(b'<p>No users!</p>', response.data)
             self.assertIn(b'michael', response.data)
             self.assertIn(b'fletcher', response.data)
-
 
     def test_main_add_user(self):
         """Ensure a new user can be added to the database."""

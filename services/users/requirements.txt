@@ -4,4 +4,6 @@ Flask-SQLAlchemy
 psycopg2-binary
 Flask-Testing
 gunicorn
+coverage
+flake8
 

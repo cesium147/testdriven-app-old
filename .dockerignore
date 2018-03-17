@@ -1,5 +1,6 @@
 env
 .venv
+htmlcov
 .dockerignore
 Dockerfile-dev
 Dockerfile-prod
