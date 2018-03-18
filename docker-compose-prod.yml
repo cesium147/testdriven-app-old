@@ -7,8 +7,6 @@ services:
     build:
       context: ./services/users
       dockerfile: Dockerfile-prod
-#    ports:
-#      - 5001:5000
     expose:
       - '5000'
     environment:
@@ -31,11 +29,30 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  nginx:
-    container_name: nginx
-    build: ./services/nginx
-    restart: always
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-prod
+      args:
+        - NODE_ENV=production
+        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     ports:
-      - 80:80
+      - '3007:80'
     depends_on:
       - users
+    links:
+      - users
+
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-prod
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - users
+      - client
